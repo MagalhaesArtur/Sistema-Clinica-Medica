@@ -1,0 +1,73 @@
+#title {
+  text-shadow: 2px 2px 2px rgb(39, 31, 32);
+}
+
+#title2 {
+  text-shadow: 3px 4px 7px rgba(81, 67, 21, 0.8);
+}
+
+#textContainer {
+  height: 300px;
+
+  width: 70%;
+  background: rgba(255, 255, 255, 0.824);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border-radius: 10px;
+}
+
+#textContainer2 {
+  height: 300px;
+
+  width: 70%;
+  background: rgba(38, 32, 32, 0.824);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border-radius: 10px;
+}
+
+@media (max-width: 767px) {
+  #image {
+    display: none;
+    width: 80%;
+    gap: 10px;
+  }
+  #formContainer {
+    width: 100% !important;
+  }
+}
+
+#submitButton {
+  background: linear-gradient(to right, #0003a2 0%, #4d54a2 79%);
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  width: 65%;
+  height: 3rem;
+  border-width: 2px;
+  border-color: transparent;
+  color: white;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition-duration: 200ms;
+  transition-property: all;
+  transition-timing-function: ease-in-out;
+}
+
+#submitButton:hover {
+  transition-duration: 200ms;
+  transition-property: all;
+  transition-timing-function: ease-in-out;
+  border-width: 2px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+#textBox label {
+  color: #2f3640;
+}
+
+#textBox input {
+  color: #2f3640 !important
+    ;
+}
