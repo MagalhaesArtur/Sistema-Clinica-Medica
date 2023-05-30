@@ -39,13 +39,23 @@
   }
 }
 
+#form {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    135deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(40, 44, 99, 1) 0%,
+    rgba(37, 37, 194, 1) 100%,
+    rgba(9, 177, 245, 1) 100%
+  );
+}
+
 #submitButton {
   background: linear-gradient(to right, #0003a2 0%, #4d54a2 79%);
   text-transform: uppercase;
   letter-spacing: 0.2rem;
-  width: 65%;
+  width: 70%;
   height: 3rem;
-  border-width: 2px;
   border-color: transparent;
   color: white;
   border-radius: 2rem;
@@ -59,15 +69,24 @@
   transition-duration: 200ms;
   transition-property: all;
   transition-timing-function: ease-in-out;
-  border-width: 2px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 #textBox label {
-  color: #2f3640;
+  color: #fff;
 }
 
 #textBox input {
-  color: #2f3640 !important
-    ;
+  color: #fff !important;
+}
+
+fieldset {
+  transition-duration: 200ms !important;
+  transition-property: all !important;
+  transition-timing-function: ease-in-out !important;
+}
+fieldset:hover {
+  transition-duration: 200ms !important;
+  transition-property: all !important;
+  transition-timing-function: ease-in-out !important;
 }
