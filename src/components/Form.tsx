@@ -15,6 +15,8 @@ function LoginForm(props: { isLoginPage: boolean }) {
   const [email, setEmail] = useState("");
 
   const [isLoginError, setIsLoginError] = useState(false);
+  const [isEmailAlreadyInUse, setIsEmailAlreadyInUse] = useState(false);
+
   const [MessageError, setMessageError] = useState("");
   const [isPasswordError, setIsPasswordError] = useState(false);
 
@@ -32,13 +34,14 @@ function LoginForm(props: { isLoginPage: boolean }) {
         setIsPasswordError(false);
       }, 5000);
     } else {
-      console.log({
-        username,
-        email,
-        password,
-      });
       const res = await CreateUser({ username, email, password });
-      console.log(res);
+      if (res == 409) {
+        setIsEmailAlreadyInUse(true);
+        setMessageError("Email já cadastrado!");
+        setTimeout(() => {
+          setIsEmailAlreadyInUse(false);
+        }, 5000);
+      }
     }
   }
 
@@ -79,17 +82,17 @@ function LoginForm(props: { isLoginPage: boolean }) {
           sx={{
             width: "70%",
             "& label.Mui-focused": {
-              color: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
+              color: `${isEmailAlreadyInUse ? "#DC2626 " : "#2E6CFD"}`,
             },
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
+                borderColor: `${isEmailAlreadyInUse ? "#DC2626 " : "#2E6CFD"}`,
               },
               "&:hover fieldset": {
                 borderColor: `#0cb41a`,
               },
               "&.Mui-focused fieldset": {
-                borderColor: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
+                borderColor: `${isEmailAlreadyInUse ? "#DC2626 " : "#2E6CFD"}`,
               },
             },
           }}
@@ -192,7 +195,7 @@ function LoginForm(props: { isLoginPage: boolean }) {
         ) : null}
 
         <br />
-        {isLoginError || isPasswordError ? (
+        {isLoginError || isPasswordError || isEmailAlreadyInUse ? (
           <h1 className="text-lg text-red-700 font-bold">{MessageError}</h1>
         ) : null}
 

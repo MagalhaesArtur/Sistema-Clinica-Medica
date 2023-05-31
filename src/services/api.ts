@@ -35,6 +35,6 @@ export const CreateUser = async (user: UserProps) => {
     return response;
   } catch (err: any) {
     console.log(err);
-    // return err.response.data.erro.message || err.data.message;
+    return err.response.data.status;
   }
 };
