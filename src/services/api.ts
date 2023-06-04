@@ -6,18 +6,19 @@ export const api = axios.create({
 });
 
 export const LoginApi = async (
-  login: string,
+  email: string,
   password: string,
   rememberMe?: boolean
 ) => {
   try {
     const response = await api.post("/login", {
-      login,
+      email,
       password,
-      rememberMe,
     });
     return response.data;
   } catch (err: any) {
+    console.log(err);
+
     return err.response.data.error.message;
   }
 };
@@ -25,12 +26,11 @@ export const LoginApi = async (
 export const CreateUser = async (user: UserProps) => {
   const { password, email, username } = user;
   try {
-    const response = await api.post("/users", {
+    const response = await api.post("/register", {
       username,
       email,
       password,
     });
-    console.log(response);
 
     return response;
   } catch (err: any) {

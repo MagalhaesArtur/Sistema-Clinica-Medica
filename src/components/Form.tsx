@@ -28,6 +28,7 @@ function LoginForm(props: { isLoginPage: boolean }) {
 
   async function handleConfirmPassword() {
     if (password != confirmPassword) {
+      setLoading(false);
       setIsPasswordError(true);
       setMessageError("As senhas não coincidem!");
       setTimeout(() => {
@@ -42,6 +43,7 @@ function LoginForm(props: { isLoginPage: boolean }) {
           setIsEmailAlreadyInUse(false);
         }, 5000);
       }
+      setLoading(false);
     }
   }
 
@@ -54,7 +56,8 @@ function LoginForm(props: { isLoginPage: boolean }) {
   async function handleSubmitLogin(event: FormEvent) {
     event.preventDefault();
 
-    // const res = await LoginApi(username, password, rememberMe);
+    const res = await LoginApi(email, password);
+    console.log(res);
   }
 
   return (
@@ -196,7 +199,7 @@ function LoginForm(props: { isLoginPage: boolean }) {
 
         <br />
         {isLoginError || isPasswordError || isEmailAlreadyInUse ? (
-          <h1 className="text-lg text-red-700 font-bold">{MessageError}</h1>
+          <h1 className="text-lg text-[#DC2626] font-bold">{MessageError}</h1>
         ) : null}
 
         {props.isLoginPage ? (
