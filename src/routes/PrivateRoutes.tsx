@@ -4,7 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 function PrivateRoutes() {
   const { signed } = useContext(AuthContext);
-
+  console.log(signed);
   return signed ? <Outlet /> : <Navigate to="/login" />;
 }
 

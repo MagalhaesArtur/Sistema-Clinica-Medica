@@ -2,7 +2,9 @@ import { ReactNode, createContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { LoginApi, api } from "../services/api";
+import { Auth, LoginApi, api } from "../services/api";
+import { UserAuthProps } from "../utils/interfaces";
+import { User } from "@phosphor-icons/react";
 
 interface AuthProps {
   children: ReactNode;
@@ -16,18 +18,22 @@ interface LoginProps {
 export const AuthContext = createContext<any>({} as any);
 
 export const AuthProvider = ({ children }: AuthProps) => {
-  let navigate = useNavigate();
-  const [isSigned, setSingned] = useState(false);
-
-  const [user, setUser] = useState("");
+  let [user, setUser] = useState<UserAuthProps | null>(null);
 
   useEffect(() => {
-    const loadingStoreData = () => {
+    const loadingStoreData = async () => {
       const storageUser = localStorage.getItem("@Auth:user");
       const storageToken = localStorage.getItem("@Auth:token");
 
-      if (storageUser && storageToken) {
-        setUser(storageUser);
+      if (storageToken && storageUser) {
+        const res = await Auth();
+        console.log(res);
+        if (!res) {
+          alert("Sessão Expirada! Faça o login novamente.");
+          setUser(null);
+        } else {
+          setUser(JSON.parse(storageUser));
+        }
       }
     };
     loadingStoreData();
@@ -35,22 +41,23 @@ export const AuthProvider = ({ children }: AuthProps) => {
 
   const signIn = async ({ email, password }: LoginProps) => {
     const res = await LoginApi(email, password);
+    console.log(res);
     if (res == 404 || res == 403) {
       return res;
     } else {
       localStorage.setItem("@Auth:token", res.token);
       localStorage.setItem("@Auth:user", JSON.stringify(res.user));
       api.defaults.headers.common["Authorization"] = `Bearer ${res.token}`;
-      setUser(res.user);
-      setSingned(true);
+      setTimeout(() => {
+        setUser(res.user);
+      }, 1000);
       return res;
     }
   };
 
   const singOut = () => {
     localStorage.clear();
-    setUser("");
-    setSingned(false);
+    setUser(null);
     return <Navigate to="/login" />;
   };
 
@@ -60,7 +67,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
         user,
         signIn,
         singOut,
-        signed: isSigned,
+        signed: user ? true : false,
       }}
     >
       {children}

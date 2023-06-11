@@ -15,7 +15,6 @@ export const LoginApi = async (
       email,
       password,
     });
-    console.log(response);
 
     return response.data;
   } catch (err: any) {
@@ -36,5 +35,15 @@ export const CreateUser = async (user: UserProps) => {
   } catch (err: any) {
     console.log(err);
     return err.response.data.status;
+  }
+};
+
+export const Auth = async () => {
+  const token = localStorage.getItem("@Auth:token");
+  if (token != null) {
+    const response = await api.post("/auth", {
+      token: token,
+    });
+    return response.data;
   }
 };

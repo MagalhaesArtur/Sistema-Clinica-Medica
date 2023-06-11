@@ -3,13 +3,20 @@ import Checkbox from "@mui/material/Checkbox";
 import { blue, green } from "@mui/material/colors";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Loading } from "./Loading";
-import { Button, TextField, dividerClasses } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  TextField,
+  dividerClasses,
+} from "@mui/material";
 import { Globe } from "@phosphor-icons/react";
 import "./login.css";
 import { LoginApi, CreateUser } from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 
 function LoginForm(props: { isLoginPage: boolean }) {
+  const { signIn, user } = useContext(AuthContext);
+
   let navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -22,8 +29,6 @@ function LoginForm(props: { isLoginPage: boolean }) {
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const { signIn, signed } = useContext(AuthContext);
 
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -57,6 +62,7 @@ function LoginForm(props: { isLoginPage: boolean }) {
 
   async function handleSubmitLogin(event: FormEvent) {
     event.preventDefault();
+    setLoading(true);
 
     const res = await signIn({ email, password });
     if (res == 404 || res == 403) {
@@ -66,13 +72,15 @@ function LoginForm(props: { isLoginPage: boolean }) {
         setIsLoginError(false);
       }, 5000);
     } else {
-      setLoading(false);
-      navigate("/consultas");
+      setTimeout(() => {
+        setLoading(false);
+        navigate("/home");
+      }, 1000);
     }
   }
 
-  if (signed) {
-    return <Navigate to="/consultas" />;
+  if (user != null) {
+    return <Navigate to="/home" />;
   } else {
     return (
       <div
@@ -263,9 +271,10 @@ function LoginForm(props: { isLoginPage: boolean }) {
             }}
             id="submitButton"
             type="submit"
+            className="flex justify-center items-center"
           >
             {loading ? (
-              <Loading size={30} />
+              <CircularProgress size={30} color="inherit" />
             ) : (
               <div>{props.isLoginPage ? "LOGIN" : "CADASTRE-SE"}</div>
             )}
@@ -277,7 +286,7 @@ function LoginForm(props: { isLoginPage: boolean }) {
                 <a
                   className="text-green-600 underline cursor-pointer  hover:text-green-500 transition-all"
                   onClick={() => {
-                    // navigate("/register");
+                    navigate("/register");
                   }}
                 >
                   Criar Conta

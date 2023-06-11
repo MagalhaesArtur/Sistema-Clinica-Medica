@@ -1,0 +1,47 @@
+#active svg {
+  /* fill: yellow !important; */
+  transition-timing-function: ease-in-out;
+  transition-duration: 200ms;
+}
+#active {
+  border-left: 3px;
+  border-color: blue;
+}
+
+#sidebarTransition {
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
+}
+
+@media (max-width: 768px) {
+  #foodName {
+    display: none;
+  }
+  #SVG {
+    width: 50px !important;
+  }
+  #menuButton {
+    display: none;
+  }
+  #item {
+    gap: 0 !important;
+    padding: 10px !important;
+  }
+  #navItens {
+    justify-items: center;
+    margin-top: 0;
+    gap: 0;
+    align-items: center;
+  }
+  #sidebarTransition {
+    width: 100%;
+    height: 5rem;
+    position: fixed !important;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  #navItens {
+    flex-direction: row;
+  }
+}
