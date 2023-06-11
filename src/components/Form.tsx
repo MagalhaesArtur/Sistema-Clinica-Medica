@@ -1,16 +1,16 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import { blue, green } from "@mui/material/colors";
-// import { LoginApi } from "../../utils/api";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Loading } from "./Loading";
 import { Button, TextField, dividerClasses } from "@mui/material";
 import { Globe } from "@phosphor-icons/react";
 import "./login.css";
 import { LoginApi, CreateUser } from "../services/api";
+import { AuthContext } from "../context/AuthContext";
 
 function LoginForm(props: { isLoginPage: boolean }) {
-  //   let navigate = useNavigate();
+  let navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
 
@@ -22,6 +22,8 @@ function LoginForm(props: { isLoginPage: boolean }) {
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const { signIn, signed } = useContext(AuthContext);
 
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -56,211 +58,237 @@ function LoginForm(props: { isLoginPage: boolean }) {
   async function handleSubmitLogin(event: FormEvent) {
     event.preventDefault();
 
-    const res = await LoginApi(email, password);
-    console.log(res);
+    const res = await signIn({ email, password });
+    if (res == 404 || res == 403) {
+      setIsLoginError(true);
+      setMessageError("Email ou senha inválidos!");
+      setTimeout(() => {
+        setIsLoginError(false);
+      }, 5000);
+    } else {
+      setLoading(false);
+      navigate("/consultas");
+    }
   }
 
-  return (
-    <div
-      id="formContainer"
-      className="  flex flex-col  justify-around items-center"
-    >
-      <div className="text-white mb-6 text-3xl">
-        {" "}
-        {props.isLoginPage ? "Bem-vindo de volta" : "Crie sua conta"}
-      </div>
-      <form
-        id={"textBox"}
-        className="flex items-center w-full  text-slate-200 flex-col"
-        onSubmit={props.isLoginPage ? handleSubmitLogin : handleSubmitRegister}
+  if (signed) {
+    return <Navigate to="/consultas" />;
+  } else {
+    return (
+      <div
+        id="formContainer"
+        className="  flex flex-col  justify-around items-center"
       >
-        <TextField
-          className=""
-          label="E-mail"
-          type={"email"}
-          variant="outlined"
-          inputProps={{ maxLength: 30 }}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          sx={{
-            width: "70%",
-            "& label.Mui-focused": {
-              color: `${isEmailAlreadyInUse ? "#DC2626 " : "#2E6CFD"}`,
-            },
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                borderColor: `${isEmailAlreadyInUse ? "#DC2626 " : "#2E6CFD"}`,
-              },
-              "&:hover fieldset": {
-                borderColor: `#0cb41a`,
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: `${isEmailAlreadyInUse ? "#DC2626 " : "#2E6CFD"}`,
-              },
-            },
-          }}
-          required
-        />
-
-        <br />
-
-        {!props.isLoginPage ? (
-          <>
-            <TextField
-              label="Nome de usuário"
-              type="text"
-              variant="outlined"
-              inputProps={{ maxLength: 30 }}
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              sx={{
-                width: "70%",
-                "& label.Mui-focused": {
-                  color: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
-                },
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
-                  },
-                  "&:hover fieldset": {
-                    borderColor: `#0cb41a`,
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
-                  },
-                },
-              }}
-              required
-            />
-            <br />
-          </>
-        ) : null}
-
-        <TextField
-          className="username !text-red-400"
-          label="Senha"
-          type="password"
-          variant="outlined"
-          inputProps={{ maxLength: 30 }}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          sx={{
-            width: "70%",
-            "& label.Mui-focused": {
-              color: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
-            },
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                borderColor: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
-              },
-              "&:hover fieldset": {
-                borderColor: `#0cb41a`,
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
-              },
-            },
-          }}
-          required
-        />
-
-        {!props.isLoginPage ? (
-          <>
-            <br />
-            <TextField
-              className="username"
-              label="Confirme sua senha"
-              type="password"
-              variant="outlined"
-              inputProps={{ maxLength: 30 }}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              sx={{
-                width: "70%",
-                "& label.Mui-focused": {
-                  color: `${isPasswordError ? "#DC2626 " : "#2E6CFD"}`,
-                },
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: `${isPasswordError ? "#DC2626 " : "#2E6CFD"}`,
-                  },
-                  "&:hover fieldset": {
-                    borderColor: `#0cb41a`,
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: `${isPasswordError ? "#DC2626 " : "#2E6CFD"}`,
-                  },
-                },
-              }}
-              required
-            />
-          </>
-        ) : null}
-
-        <br />
-        {isLoginError || isPasswordError || isEmailAlreadyInUse ? (
-          <h1 className="text-lg text-[#DC2626] font-bold">{MessageError}</h1>
-        ) : null}
-
-        {props.isLoginPage ? (
-          <div className="flex items-center mt-5 w-[250px] justify-start">
-            <Checkbox
-              defaultChecked
-              sx={{
-                color: green[800],
-                "&.Mui-checked": {
-                  color: green[600],
-                },
-              }}
-              id="check"
-              className="mr-4"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-            />
-            <label
-              htmlFor="check"
-              className="text-slate-800 font-semibold text-lg"
-            >
-              Lembre de Mim
-            </label>
-          </div>
-        ) : null}
-
-        <br />
-        <button
-          onClick={() => {
-            setLoading(true);
-            if (password == "" || username == "") {
-              setLoading(false);
-            }
-          }}
-          id="submitButton"
-          type="submit"
+        <div className="text-white mb-6 text-3xl">
+          {" "}
+          {props.isLoginPage ? "Bem-vindo de volta" : "Crie sua conta"}
+        </div>
+        <form
+          id={"textBox"}
+          className="flex items-center w-full  text-slate-200 flex-col"
+          onSubmit={
+            props.isLoginPage ? handleSubmitLogin : handleSubmitRegister
+          }
         >
-          {loading ? (
-            <Loading size={30} />
-          ) : (
-            <div>{props.isLoginPage ? "LOGIN" : "CADASTRE-SE"}</div>
-          )}
-        </button>
-        <footer className="mt-4">
-          {props.isLoginPage ? (
-            <h2 className={"text-white"}>
-              Ainda não tem uma conta?{" "}
-              <a
-                className="text-green-600 underline cursor-pointer  hover:text-green-500 transition-all"
-                onClick={() => {
-                  // navigate("/register");
+          <TextField
+            className=""
+            label="E-mail"
+            type={"email"}
+            variant="outlined"
+            inputProps={{ maxLength: 30 }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            sx={{
+              width: "70%",
+              "& label.Mui-focused": {
+                color: `${
+                  isEmailAlreadyInUse || isLoginError ? "#DC2626 " : "#2E6CFD"
+                }`,
+              },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: `${
+                    isEmailAlreadyInUse || isLoginError ? "#DC2626 " : "#2E6CFD"
+                  }`,
+                },
+                "&:hover fieldset": {
+                  borderColor: `#0cb41a`,
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: `${
+                    isEmailAlreadyInUse || isLoginError ? "#DC2626 " : "#2E6CFD"
+                  }`,
+                },
+              },
+            }}
+            required
+          />
+
+          <br />
+
+          {!props.isLoginPage ? (
+            <>
+              <TextField
+                label="Nome de usuário"
+                type="text"
+                variant="outlined"
+                inputProps={{ maxLength: 30 }}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                sx={{
+                  width: "70%",
+                  "& label.Mui-focused": {
+                    color: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
+                    },
+                    "&:hover fieldset": {
+                      borderColor: `#0cb41a`,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
+                    },
+                  },
                 }}
-              >
-                Criar Conta
-              </a>
-            </h2>
+                required
+              />
+              <br />
+            </>
           ) : null}
-        </footer>
-      </form>
-    </div>
-  );
+
+          <TextField
+            className="username !text-red-400"
+            label="Senha"
+            type="password"
+            variant="outlined"
+            inputProps={{ maxLength: 30 }}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            sx={{
+              width: "70%",
+              "& label.Mui-focused": {
+                color: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
+              },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
+                },
+                "&:hover fieldset": {
+                  borderColor: `#0cb41a`,
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: `${isLoginError ? "#DC2626 " : "#2E6CFD"}`,
+                },
+              },
+            }}
+            required
+          />
+
+          {!props.isLoginPage ? (
+            <>
+              <br />
+              <TextField
+                className="username"
+                label="Confirme sua senha"
+                type="password"
+                variant="outlined"
+                inputProps={{ maxLength: 30 }}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                sx={{
+                  width: "70%",
+                  "& label.Mui-focused": {
+                    color: `${isPasswordError ? "#DC2626 " : "#2E6CFD"}`,
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: `${
+                        isPasswordError ? "#DC2626 " : "#2E6CFD"
+                      }`,
+                    },
+                    "&:hover fieldset": {
+                      borderColor: `#0cb41a`,
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: `${
+                        isPasswordError ? "#DC2626 " : "#2E6CFD"
+                      }`,
+                    },
+                  },
+                }}
+                required
+              />
+            </>
+          ) : null}
+
+          <br />
+          {isLoginError || isPasswordError || isEmailAlreadyInUse ? (
+            <h1 className="text-lg text-[#DC2626] font-bold">{MessageError}</h1>
+          ) : null}
+
+          {props.isLoginPage ? (
+            <div className="flex items-center mt-5 w-[250px] justify-start">
+              <Checkbox
+                defaultChecked
+                sx={{
+                  color: green[800],
+                  "&.Mui-checked": {
+                    color: green[600],
+                  },
+                }}
+                id="check"
+                className="mr-4"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+              />
+              <label
+                htmlFor="check"
+                className="text-slate-800 font-semibold text-lg"
+              >
+                Lembre de Mim
+              </label>
+            </div>
+          ) : null}
+
+          <br />
+          <button
+            onClick={() => {
+              setLoading(true);
+              setIsLoginError(false);
+              if (password == "" || username == "") {
+                setLoading(false);
+              }
+            }}
+            id="submitButton"
+            type="submit"
+          >
+            {loading ? (
+              <Loading size={30} />
+            ) : (
+              <div>{props.isLoginPage ? "LOGIN" : "CADASTRE-SE"}</div>
+            )}
+          </button>
+          <footer className="mt-4">
+            {props.isLoginPage ? (
+              <h2 className={"text-white"}>
+                Ainda não tem uma conta?{" "}
+                <a
+                  className="text-green-600 underline cursor-pointer  hover:text-green-500 transition-all"
+                  onClick={() => {
+                    // navigate("/register");
+                  }}
+                >
+                  Criar Conta
+                </a>
+              </h2>
+            ) : null}
+          </footer>
+        </form>
+      </div>
+    );
+  }
 }
 
 export default LoginForm;

@@ -6,8 +6,8 @@ export const api = axios.create({
 });
 
 export const LoginApi = async (
-  email: string,
-  password: string,
+  email: String,
+  password: String,
   rememberMe?: boolean
 ) => {
   try {
@@ -15,11 +15,11 @@ export const LoginApi = async (
       email,
       password,
     });
+    console.log(response);
+
     return response.data;
   } catch (err: any) {
-    console.log(err);
-
-    return err.response.data.error.message;
+    return err.response.status;
   }
 };
 
