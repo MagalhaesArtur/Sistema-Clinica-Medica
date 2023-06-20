@@ -1,10 +1,9 @@
 import { ReactNode, createContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Auth, LoginApi, api } from "../services/api";
 import { UserAuthProps } from "../utils/interfaces";
-import { User } from "@phosphor-icons/react";
 
 interface AuthProps {
   children: ReactNode;
@@ -30,6 +29,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
         console.log(res);
         if (!res) {
           alert("Sessão Expirada! Faça o login novamente.");
+          localStorage.clear();
           setUser(null);
         } else {
           setUser(JSON.parse(storageUser));

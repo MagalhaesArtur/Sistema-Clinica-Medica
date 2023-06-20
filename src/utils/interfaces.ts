@@ -8,6 +8,13 @@ interface Authority {
   authority: String;
 }
 
+export interface ConsultasProps {
+  id?: string;
+  date: number;
+  doctor: Doctor;
+  patient: UserAuthProps;
+}
+
 export interface UserAuthProps {
   accountNonExpired: boolean;
   accountNonLocked: boolean;
@@ -18,4 +25,11 @@ export interface UserAuthProps {
   id: String;
   password: null;
   username: String;
+}
+
+export interface Doctor {
+  id: number;
+  name: String;
+  photoURL: string;
+  specialty: String;
 }

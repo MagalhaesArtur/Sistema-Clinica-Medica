@@ -18,7 +18,7 @@ function UserHomePage() {
       <section className="min-h-screen">
         <Sidebar />
       </section>
-      {/* <NavBar isLoading={isLoading} setLoading={setIsLoading} />; */}
+
       <Outlet />
     </div>
   );

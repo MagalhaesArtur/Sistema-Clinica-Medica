@@ -9,6 +9,7 @@ import UserHomePage from "./pages/UserHomePage.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import PrivateRoutes from "./routes/PrivateRoutes.tsx";
 import { RequireAuth } from "./context/RequireAuth.tsx";
+import { HomePageContent } from "./components/HomePage/HomePageContent.tsx";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <AuthProvider>
@@ -25,7 +26,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 <UserHomePage />
               </RequireAuth>
             }
-          />
+          >
+            <Route path="/home" element={<HomePageContent />}></Route>
+          </Route>
         </Routes>
       </Router>
     </React.StrictMode>

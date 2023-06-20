@@ -13,9 +13,9 @@ function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const foods = [
-    { name: "Home", element: <HomeIcon />, path: "home" },
-    { name: "Agendar", element: <EventNoteIcon />, path: "consultas" },
-    { name: "Histórico", element: <HistoryIcon />, path: "history" },
+    { name: "Home", element: <HomeIcon />, path: "/home" },
+    { name: "Agendar", element: <EventNoteIcon />, path: "/consultas" },
+    { name: "Histórico", element: <HistoryIcon />, path: "/history" },
   ];
 
   return (

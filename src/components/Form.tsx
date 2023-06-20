@@ -66,6 +66,8 @@ function LoginForm(props: { isLoginPage: boolean }) {
 
     const res = await signIn({ email, password });
     if (res == 404 || res == 403) {
+      setLoading(false);
+
       setIsLoginError(true);
       setMessageError("Email ou senha inválidos!");
       setTimeout(() => {

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserProps } from "../utils/interfaces";
+import { UserAuthProps, UserProps } from "../utils/interfaces";
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -45,5 +45,21 @@ export const Auth = async () => {
       token: token,
     });
     return response.data;
+  }
+};
+
+export const GetConsultas = async () => {
+  try {
+    const user: UserAuthProps = JSON.parse(
+      localStorage.getItem("@Auth:user") || "{}"
+    );
+    const id = user.id;
+    const response = await api.post("/consultas/user", {
+      id,
+    });
+
+    return response;
+  } catch (err: any) {
+    return err;
   }
 };
