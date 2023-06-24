@@ -1,4 +1,4 @@
-import { Button, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { useState } from "react";
 import "./styles.css";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";

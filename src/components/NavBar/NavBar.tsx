@@ -12,7 +12,6 @@ import "./NavBar.css";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { TextAlignCenter } from "@phosphor-icons/react";
 
 interface navProps {
   isLoading: boolean;

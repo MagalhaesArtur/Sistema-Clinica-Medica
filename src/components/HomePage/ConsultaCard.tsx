@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import { ConsultasProps } from "../../utils/interfaces";
 import "./styles.css";
 import HourglassEmptyRoundedIcon from "@mui/icons-material/HourglassEmptyRounded";
+import CheckIcon from "@mui/icons-material/Check";
 
-export function ConsultaCard({ date, doctor, patient }: ConsultasProps) {
+export function ConsultaCard({
+  date,
+  doctor,
+  patient,
+  isConfirmed,
+}: ConsultasProps) {
   const [day, setDay] = useState<any>();
   const [hours, setHours] = useState<any>();
   const [minutes, setMinutes] = useState<any>();
@@ -63,12 +69,21 @@ export function ConsultaCard({ date, doctor, patient }: ConsultasProps) {
         </div>
         <div className="w-1/3">
           <div className="text-slate-400">Status</div>
-          <div
-            title="Aguardando confirmação"
-            className="text-[#071008] w-8 flex rounded-md justify-center h-8 items-center bg-yellow-400 text-lg"
-          >
-            <HourglassEmptyRoundedIcon />
-          </div>
+          {isConfirmed ? (
+            <div
+              title="Aguardando confirmação"
+              className="text-[#071008] w-8 flex rounded-md justify-center h-8 items-center bg-yellow-400 text-lg"
+            >
+              <HourglassEmptyRoundedIcon />
+            </div>
+          ) : (
+            <div
+              title="Consulta Confirmada"
+              className="text-[#071008] w-8 flex rounded-md justify-center h-8 items-center bg-green-400 text-lg"
+            >
+              <CheckIcon />
+            </div>
+          )}
         </div>
       </div>
       <div></div>

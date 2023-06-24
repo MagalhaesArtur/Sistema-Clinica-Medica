@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { UserAuthProps } from "../../utils/interfaces";
 import { Consultas } from "./Consultas";
+import { ScheduleConsulta } from "./ScheduleConsulta";
 
 export const HomePageContent = () => {
   const [user, setUser] = useState<UserAuthProps>();
@@ -17,11 +18,13 @@ export const HomePageContent = () => {
         <span className="text-slate-200">Bem vindo, </span>
         <span className="text-[#36bd42]">{user?.username}!</span>
       </div>
-      <div className="w-full mt-20 h-full ">
-        <div>
+      <div className="w-full flex justify-start gap-8 mt-20 h-full ">
+        <div className="w-[25%]">
           <Consultas />
         </div>
-        <div></div>
+        <div className="w-[60%]">
+          <ScheduleConsulta />
+        </div>
       </div>
     </section>
   );

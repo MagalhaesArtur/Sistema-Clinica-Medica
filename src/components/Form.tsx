@@ -1,17 +1,10 @@
-import { FormEvent, useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
-import { blue, green } from "@mui/material/colors";
+import { green } from "@mui/material/colors";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Loading } from "./Loading";
-import {
-  Button,
-  CircularProgress,
-  TextField,
-  dividerClasses,
-} from "@mui/material";
-import { Globe } from "@phosphor-icons/react";
+import { CircularProgress, TextField } from "@mui/material";
 import "./login.css";
-import { LoginApi, CreateUser } from "../services/api";
+import { CreateUser } from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 
 function LoginForm(props: { isLoginPage: boolean }) {

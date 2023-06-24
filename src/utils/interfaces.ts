@@ -11,6 +11,7 @@ interface Authority {
 export interface ConsultasProps {
   id?: string;
   date: number;
+  isConfirmed: boolean;
   doctor: Doctor;
   patient: UserAuthProps;
 }

@@ -1,13 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./main.css";
 import LoginPage from "./pages/LoginPage.tsx";
 import SingUpPage from "./pages/SingUpPage.tsx";
 import UserHomePage from "./pages/UserHomePage.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
-import PrivateRoutes from "./routes/PrivateRoutes.tsx";
 import { RequireAuth } from "./context/RequireAuth.tsx";
 import { HomePageContent } from "./components/HomePage/HomePageContent.tsx";
 
