@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { GetConsultas } from "../../services/api";
 import { ConsultasProps } from "../../utils/interfaces";
 import { ConsultaCard } from "./ConsultaCard";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 
 export const Consultas = () => {
   const [consultas, setConsultas] = useState<Array<ConsultasProps>>();
@@ -10,7 +11,6 @@ export const Consultas = () => {
       const res = await GetConsultas();
       const data = res.data;
       setConsultas(data);
-      console.log(res);
     };
     getConsultas();
   }, []);
@@ -20,15 +20,24 @@ export const Consultas = () => {
       <div className="text-white text-lg font-semibold mb-4">
         Suas Consultas
       </div>
-      {consultas?.map((consulta) => (
-        <ConsultaCard
-          date={consulta.date}
-          isConfirmed={consulta.isConfirmed}
-          doctor={consulta.doctor}
-          patient={consulta.patient}
-          key={consulta.id}
-        />
-      ))}
+      {consultas?.length == 0 ? (
+        <div className="w-full flex flex-col items-center justify-center">
+          <SentimentVeryDissatisfiedIcon className="!text-6xl text-slate-300" />
+          <span className="text-slate-300 font-semibold text-lg">
+            Sem consultas marcadas!
+          </span>
+        </div>
+      ) : (
+        consultas?.map((consulta) => (
+          <ConsultaCard
+            date={consulta.date}
+            isConfirmed={consulta.isConfirmed}
+            doctor={consulta.doctor}
+            patient={consulta.patient}
+            key={consulta.id}
+          />
+        ))
+      )}
     </div>
   );
 };

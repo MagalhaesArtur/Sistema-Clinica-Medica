@@ -32,8 +32,6 @@ export function ConsultaCard({
     setMinutes(rawDateAux.getMinutes());
     setMonth(rawDateAux.getMonth());
     setYear(rawDateAux.getFullYear());
-
-    console.log(rawDateAux.getMinutes());
   }, []);
 
   return (

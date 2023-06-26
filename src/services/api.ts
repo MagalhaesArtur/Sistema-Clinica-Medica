@@ -1,9 +1,22 @@
-import axios from "axios";
+import axios, { AxiosHeaderValue, AxiosHeaders, AxiosInstance } from "axios";
 import { UserAuthProps, UserProps } from "../utils/interfaces";
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
 
-export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-});
+const storageToken = localStorage.getItem("@Auth:token");
+
+export let api: AxiosInstance;
+
+storageToken == undefined
+  ? (api = axios.create({
+      baseURL: import.meta.env.VITE_API_URL,
+      headers: {
+        Authorization: storageToken,
+      },
+    }))
+  : (api = axios.create({
+      baseURL: import.meta.env.VITE_API_URL,
+    }));
 
 export const LoginApi = async (
   email: String,
@@ -40,11 +53,14 @@ export const CreateUser = async (user: UserProps) => {
 
 export const Auth = async () => {
   const token = localStorage.getItem("@Auth:token");
+
   if (token != null) {
     const response = await api.post("/auth", {
       token: token,
     });
     return response.data;
+  } else {
+    localStorage.clear();
   }
 };
 
@@ -57,6 +73,22 @@ export const GetConsultas = async () => {
     const response = await api.post("/consultas/user", {
       id,
     });
+
+    return response;
+  } catch (err: any) {
+    return err;
+  }
+};
+
+export const GetDocs = async () => {
+  try {
+    storageToken != null
+      ? (api.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${storageToken}`)
+      : null;
+
+    const response = await api.get("/doctors");
 
     return response;
   } catch (err: any) {

@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
       if (storageToken && storageUser) {
         const res = await Auth();
         console.log(res);
-        if (!res) {
+        if (!res || res.status == 500) {
           alert("Sessão Expirada! Faça o login novamente.");
           localStorage.clear();
           setUser(null);
@@ -48,6 +48,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
       localStorage.setItem("@Auth:token", res.token);
       localStorage.setItem("@Auth:user", JSON.stringify(res.user));
       api.defaults.headers.common["Authorization"] = `Bearer ${res.token}`;
+
       setTimeout(() => {
         setUser(res.user);
       }, 1000);

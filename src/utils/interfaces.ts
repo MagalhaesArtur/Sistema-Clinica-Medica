@@ -29,7 +29,7 @@ export interface UserAuthProps {
 }
 
 export interface Doctor {
-  id: number;
+  id?: number;
   name: String;
   photoURL: string;
   specialty: String;
