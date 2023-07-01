@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Pagination from "./Pagination";
 import { CircularProgress } from "@mui/material";
+import { TimeComponent } from "./TimeComponent";
 
 export interface DateProps {
   dayOfMonth: number;
@@ -10,20 +11,40 @@ export interface DateProps {
 export interface CurrentWeekProps extends Array<DateProps> {}
 
 export interface RemainingWeeksProps extends Array<CurrentWeekProps> {}
-export interface teste {
+export interface PaginationProps {
   remainingWeeks: RemainingWeeksProps | [];
   getDayOfWeekName: Function;
   getMonthName: Function;
   setIsLoading: Function;
   isLoading: boolean;
+  setCurrentAppointmentDay: Function;
+  setCurrentAppointmentMonth: Function;
+}
+
+export interface TimeCompProps {
+  time: string;
+  isLoading: boolean;
+  setIsLoading: Function;
+  setCurrentTime: Function;
+  currentTime: string;
 }
 
 export const CalendarComponent = () => {
   const [remainingMonths, setRemainingMonths] = useState<Array<number>>();
   const [remainingDays, setRemainingDays] = useState<Array<number>>();
-  const [currentWeek, setCurrentWeek] = useState<CurrentWeekProps>();
+  const [currentWeek, setCurrentWeek] = useState<
+    CurrentWeekProps | undefined
+  >();
   const [remainingWeeks, setRemainingWeeks] = useState<RemainingWeeksProps>();
   const [isLoading, setIsLoading] = useState(false);
+
+  const [currentYear, setCurrentYear] = useState("");
+  const [currentAppointmentDay, setCurrentAppointmentDay] = useState("");
+  const [currentAppointmentMonth, setCurrentAppointmentMonth] = useState<
+    number | null
+  >(null);
+
+  const [currentTime, setCurrentTime] = useState("");
 
   function getAllWeeksUntilEndOfYear() {
     const currentDate = new Date();
@@ -94,6 +115,29 @@ export const CalendarComponent = () => {
     return data.getDate();
   }
 
+  const appointmentTimes = {
+    morning: [
+      "08:00",
+      "08:30",
+      "09:00",
+      "09:30",
+      "10:00",
+      "10:30",
+      "11:00",
+      "11:30",
+    ],
+    afternoon: [
+      "13:00",
+      "13:30",
+      "14:00",
+      "14:30",
+      "15:00",
+      "15:30",
+      "16:00",
+      "16:30",
+    ],
+  };
+
   const getRemainingDays = (day: number, mes: number, ano: number) => {
     let aux = day;
     const listAux = [];
@@ -134,18 +178,48 @@ export const CalendarComponent = () => {
   return (
     <div className=" p-4 w-full items-end relative bg-[#143789] rounded-lg flex flex-col  gap-4 justify-between">
       {isLoading ? (
-        <CircularProgress size={30} className="!text-white" />
+        <CircularProgress size={25} className="!text-white" />
       ) : (
-        <CircularProgress size={30} className="!invisible" />
+        <CircularProgress size={25} className="!invisible" />
       )}
 
       <Pagination
+        setCurrentAppointmentDay={setCurrentAppointmentDay}
+        setCurrentAppointmentMonth={setCurrentAppointmentMonth}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         getMonthName={getMonthName}
         remainingWeeks={remainingWeeks || aux}
         getDayOfWeekName={getDayOfWeekName}
       />
+      <div className="flex flex-col  w-full p-4 justify-between  gap-2">
+        <span className="text-slate-300 font-bold text-2xl">
+          Selecione um horário
+        </span>
+        <div className="flex w-full p-4 justify-between gap-2">
+          {appointmentTimes.morning.map((time) => (
+            <TimeComponent
+              currentTime={currentTime}
+              key={time}
+              isLoading={isLoading}
+              time={time}
+              setIsLoading={setIsLoading}
+              setCurrentTime={setCurrentTime}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="w-full p-2 bg-[#2f60d1] rounded-xl">
+        <span className="text-green-400 font-bold text-lg">
+          {currentAppointmentDay} de {""}
+          {currentAppointmentMonth == null
+            ? null
+            : getMonthName(currentAppointmentMonth)}{" "}
+          , {currentYear}
+        </span>
+        <span>{currentTime}</span>
+      </div>
     </div>
   );
 };

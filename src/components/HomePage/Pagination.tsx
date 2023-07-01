@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { RemainingWeeksProps, teste } from "./CalendarComponent";
+import { RemainingWeeksProps, PaginationProps } from "./CalendarComponent";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
@@ -9,9 +9,11 @@ function Pagination({
   getMonthName,
   setIsLoading,
   isLoading,
-}: teste) {
+  setCurrentAppointmentDay,
+  setCurrentAppointmentMonth,
+}: PaginationProps) {
   const [currentPage, setCurrentPage] = useState(0);
-  const [currentDay, setCurrentDay] = useState(0);
+  const [currentDay, setCurrentDay] = useState(-1);
 
   const [currentMonth, setCurrentMonth] = useState<number>(
     new Date().getMonth()
@@ -83,15 +85,18 @@ function Pagination({
                 setIsLoading(true);
 
                 setCurrentDay(dayIndex);
+                setCurrentAppointmentDay(day.dayOfMonth);
+                setCurrentAppointmentMonth(day.monthIndex);
+
                 setCurrentMonth(day.monthIndex);
                 setTimeout(() => {
                   setIsLoading(false);
                 }, 1000);
               }}
-              className={`flex w-24 justify-center items-center p-3 rounded-lg bg-[#0e2968] cursor-pointer ${
+              className={`flex w-24 justify-center items-center p-3 rounded-3xl bg-[#0e2968] cursor-pointer ${
                 isLoading ? "!cursor-not-allowed" : null
               } border-2 border-transparent flex-col gap-4  transition-all ${
-                currentDay == dayIndex ? "border-green-400" : null
+                currentDay == dayIndex ? "!border-green-400" : null
               }`}
             >
               <span className="text-slate-400 text-lg font-semibold">
