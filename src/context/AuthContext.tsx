@@ -18,6 +18,7 @@ export const AuthContext = createContext<any>({} as any);
 
 export const AuthProvider = ({ children }: AuthProps) => {
   let [user, setUser] = useState<UserAuthProps | null>(null);
+  let [token, setToken] = useState("");
 
   useEffect(() => {
     const loadingStoreData = async () => {
@@ -26,7 +27,6 @@ export const AuthProvider = ({ children }: AuthProps) => {
 
       if (storageToken && storageUser) {
         const res = await Auth();
-        console.log(res);
         if (!res || res.status == 500) {
           alert("Sessão Expirada! Faça o login novamente.");
           localStorage.clear();
@@ -41,7 +41,6 @@ export const AuthProvider = ({ children }: AuthProps) => {
 
   const signIn = async ({ email, password }: LoginProps) => {
     const res = await LoginApi(email, password);
-    console.log(res);
     if (res == 404 || res == 403) {
       return res;
     } else {
@@ -51,6 +50,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
 
       setTimeout(() => {
         setUser(res.user);
+        setToken(res.token);
       }, 1000);
       return res;
     }

@@ -13,7 +13,7 @@ function UserHomePage() {
   }, []);
 
   return (
-    <div className="min-w-[100vw]  min-h-screen flex bg-[#130f40]">
+    <div className="max-w-[100vw]  min-h-screen flex bg-[#130f40]">
       <section className="min-h-screen">
         <Sidebar />
       </section>

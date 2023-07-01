@@ -29,7 +29,27 @@ export interface TimeCompProps {
   currentTime: string;
 }
 
-export const CalendarComponent = () => {
+interface CalendarComponentProps {
+  currentAppointmentDay: string;
+  currentAppointmentMonth?: number;
+  currentYear?: string;
+  setCurrentAppointmentDay: Function;
+  setCurrentAppointmentMonth: Function;
+  currentTime: string;
+  setCurrentTime: Function;
+  handleCreateConsultaButton: Function;
+}
+
+export const CalendarComponent = ({
+  currentAppointmentDay,
+  currentAppointmentMonth,
+  currentTime,
+  setCurrentTime,
+  currentYear,
+  setCurrentAppointmentDay,
+  handleCreateConsultaButton,
+  setCurrentAppointmentMonth,
+}: CalendarComponentProps) => {
   const [remainingMonths, setRemainingMonths] = useState<Array<number>>();
   const [remainingDays, setRemainingDays] = useState<Array<number>>();
   const [currentWeek, setCurrentWeek] = useState<
@@ -37,14 +57,6 @@ export const CalendarComponent = () => {
   >();
   const [remainingWeeks, setRemainingWeeks] = useState<RemainingWeeksProps>();
   const [isLoading, setIsLoading] = useState(false);
-
-  const [currentYear, setCurrentYear] = useState("");
-  const [currentAppointmentDay, setCurrentAppointmentDay] = useState("");
-  const [currentAppointmentMonth, setCurrentAppointmentMonth] = useState<
-    number | null
-  >(null);
-
-  const [currentTime, setCurrentTime] = useState("");
 
   function getAllWeeksUntilEndOfYear() {
     const currentDate = new Date();
@@ -196,7 +208,7 @@ export const CalendarComponent = () => {
         <span className="text-slate-300 font-bold text-2xl">
           Selecione um horário
         </span>
-        <div className="flex w-full p-4 justify-between gap-2">
+        <div className="flex w-full py-4 justify-between gap-2">
           {appointmentTimes.morning.map((time) => (
             <TimeComponent
               currentTime={currentTime}
@@ -210,16 +222,29 @@ export const CalendarComponent = () => {
         </div>
       </div>
 
-      <div className="w-full p-2 bg-[#2f60d1] rounded-xl">
-        <span className="text-green-400 font-bold text-lg">
-          {currentAppointmentDay} de {""}
-          {currentAppointmentMonth == null
-            ? null
-            : getMonthName(currentAppointmentMonth)}{" "}
-          , {currentYear}
-        </span>
-        <span>{currentTime}</span>
-      </div>
+      {currentAppointmentDay != "" || currentAppointmentMonth != null ? (
+        <div className="w-full items-center flex justify-between p-2 bg-[#2f60d1] rounded-xl">
+          <span className="text-green-400  font-bold text-lg">
+            {currentAppointmentDay} de {""}
+            {currentAppointmentMonth == null
+              ? null
+              : getMonthName(currentAppointmentMonth)}
+            {currentTime ? ", " : null} {currentYear}
+            <span className="text-slate-300">{currentTime}</span>
+          </span>
+          <button
+            onClick={() => {
+              handleCreateConsultaButton();
+            }}
+            disabled={isLoading}
+            className={`p-4 transition-all border-2 border-transparent cursor-pointer hover:border-green-400 bg-[#143789] rounded-3xl text-white font-bold ${
+              isLoading ? "!cursor-not-allowed hover:border-transparent" : null
+            } `}
+          >
+            Marcar
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 };

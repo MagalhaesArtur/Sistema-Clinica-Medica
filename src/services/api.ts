@@ -1,22 +1,18 @@
 import axios, { AxiosHeaderValue, AxiosHeaders, AxiosInstance } from "axios";
-import { UserAuthProps, UserProps } from "../utils/interfaces";
+import {
+  DTOConsulta,
+  DTOdate,
+  UserAuthProps,
+  UserProps,
+} from "../utils/interfaces";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 
 const storageToken = localStorage.getItem("@Auth:token");
 
-export let api: AxiosInstance;
-
-storageToken == undefined
-  ? (api = axios.create({
-      baseURL: import.meta.env.VITE_API_URL,
-      headers: {
-        Authorization: storageToken,
-      },
-    }))
-  : (api = axios.create({
-      baseURL: import.meta.env.VITE_API_URL,
-    }));
+export const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+});
 
 export const LoginApi = async (
   email: String,
@@ -24,6 +20,8 @@ export const LoginApi = async (
   rememberMe?: boolean
 ) => {
   try {
+    api.defaults.headers.common["Authorization"] = null;
+
     const response = await api.post("/login", {
       email,
       password,
@@ -80,18 +78,25 @@ export const GetConsultas = async () => {
   }
 };
 
-export const GetDocs = async () => {
-  try {
-    storageToken != null
-      ? (api.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${storageToken}`)
-      : null;
+export const CreateConsulta = async ({
+  date,
+  doctor_id,
+  patient_id,
+}: DTOConsulta) => {
+  const response = await api.post("/createConsulta", {
+    patient_id,
+    doctor_id,
+    date,
+  });
+  console.log(response);
+  return response;
+};
 
-    const response = await api.get("/doctors");
+export const GetDocs = async (token: string) => {
+  storageToken != undefined
+    ? (api.defaults.headers.common["Authorization"] = `Bearer ${storageToken}`)
+    : (api.defaults.headers.common["Authorization"] = `Bearer ${token}`);
+  const response = await api.get("/doctors");
 
-    return response;
-  } catch (err: any) {
-    return err;
-  }
+  return response;
 };

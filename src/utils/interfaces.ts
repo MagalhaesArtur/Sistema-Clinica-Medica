@@ -34,3 +34,16 @@ export interface Doctor {
   photoURL: string;
   specialty: String;
 }
+
+export interface DTOdate {
+  ano: string;
+  mes?: number;
+  dia: string;
+  horario: string;
+}
+
+export interface DTOConsulta {
+  patient_id: string;
+  doctor_id: string;
+  date: DTOdate;
+}

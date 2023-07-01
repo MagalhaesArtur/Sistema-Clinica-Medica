@@ -1,21 +1,46 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Doctor } from "../../utils/interfaces";
 import { Doc } from "./Doc";
-import { GetDocs } from "../../services/api";
-import { Calendar } from "@phosphor-icons/react";
+import { CreateConsulta, GetDocs } from "../../services/api";
 import { CalendarComponent } from "./CalendarComponent";
+import { AuthContext } from "../../context/AuthContext";
 
 export const ScheduleConsulta = () => {
   const [docs, setDocs] = useState<Array<Doctor>>();
   const [currentDoc, setCurrentDoc] = useState<Doctor | null>(null);
 
+  const [currentYear, setCurrentYear] = useState();
+  const [currentAppointmentDay, setCurrentAppointmentDay] = useState("");
+  const [currentAppointmentMonth, setCurrentAppointmentMonth] = useState<
+    number | undefined
+  >(undefined);
+  const [currentTime, setCurrentTime] = useState("");
+
+  const { token, user } = useContext(AuthContext);
+
+  const aux = new Date();
+
+  console.log(currentDoc);
   useEffect(() => {
     const getDoc = async () => {
-      const res = await GetDocs();
+      const res = await GetDocs(token);
       setDocs(res.data);
     };
     getDoc();
   }, []);
+
+  const handleCreateConsultaButton = () => {
+    CreateConsulta({
+      patient_id: user.id,
+      doctor_id: currentDoc?.id?.toString() || "",
+      date: {
+        ano: aux.getFullYear().toString(),
+        dia: currentAppointmentDay,
+        horario: currentTime,
+        mes: currentAppointmentMonth,
+      },
+    });
+  };
 
   return (
     <div className="w-full rounded-lg p-4  flex flex-col gap-4 bg-[#2f60d1]">
@@ -47,7 +72,16 @@ export const ScheduleConsulta = () => {
           </span>
         ))}
       </div>
-      <CalendarComponent />
+      <CalendarComponent
+        handleCreateConsultaButton={handleCreateConsultaButton}
+        currentAppointmentDay={currentAppointmentDay}
+        currentAppointmentMonth={currentAppointmentMonth}
+        currentTime={currentTime}
+        setCurrentTime={setCurrentTime}
+        currentYear={currentYear}
+        setCurrentAppointmentDay={setCurrentAppointmentDay}
+        setCurrentAppointmentMonth={setCurrentAppointmentMonth}
+      />
     </div>
   );
 };
