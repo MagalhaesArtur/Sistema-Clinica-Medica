@@ -44,14 +44,13 @@ export const AuthProvider = ({ children }: AuthProps) => {
     if (res == 404 || res == 403) {
       return res;
     } else {
+      setUser(res.user);
+      setToken(res.token);
       localStorage.setItem("@Auth:token", res.token);
       localStorage.setItem("@Auth:user", JSON.stringify(res.user));
       api.defaults.headers.common["Authorization"] = `Bearer ${res.token}`;
-
-      setTimeout(() => {
-        setUser(res.user);
-        setToken(res.token);
-      }, 1000);
+      token = res.token;
+      user = res.user;
       return res;
     }
   };

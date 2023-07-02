@@ -17,6 +17,7 @@ export const TimeComponent = ({
           setIsLoading(false);
         }, 1000);
       }}
+      disabled={isLoading}
       className={`flex w-24 justify-center  items-center p-3 rounded-3xl bg-[#0e2968] cursor-pointer ${
         isLoading ? "!cursor-not-allowed" : null
       } border-2 border-transparent flex-col gap-4  transition-all ${

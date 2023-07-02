@@ -6,6 +6,7 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 
 export const Consultas = () => {
   const [consultas, setConsultas] = useState<Array<ConsultasProps>>();
+  console.log(consultas);
   useEffect(() => {
     const getConsultas = async () => {
       const res = await GetConsultas();

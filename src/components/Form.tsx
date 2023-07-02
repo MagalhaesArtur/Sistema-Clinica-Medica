@@ -8,7 +8,7 @@ import { CreateUser } from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 
 function LoginForm(props: { isLoginPage: boolean }) {
-  const { signIn, user } = useContext(AuthContext);
+  let { signIn, user } = useContext(AuthContext);
 
   let navigate = useNavigate();
   const [username, setUsername] = useState("");

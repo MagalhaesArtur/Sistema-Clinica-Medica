@@ -5,8 +5,6 @@ import {
   UserAuthProps,
   UserProps,
 } from "../utils/interfaces";
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
 
 const storageToken = localStorage.getItem("@Auth:token");
 
@@ -20,8 +18,6 @@ export const LoginApi = async (
   rememberMe?: boolean
 ) => {
   try {
-    api.defaults.headers.common["Authorization"] = null;
-
     const response = await api.post("/login", {
       email,
       password,
@@ -79,24 +75,49 @@ export const GetConsultas = async () => {
 };
 
 export const CreateConsulta = async ({
-  date,
+  data,
   doctor_id,
   patient_id,
 }: DTOConsulta) => {
-  const response = await api.post("/createConsulta", {
-    patient_id,
-    doctor_id,
-    date,
-  });
-  console.log(response);
-  return response;
+  if (await Auth()) {
+    const token = localStorage.getItem("@Auth:token");
+    console.log(token);
+    const response = await api.post(
+      "/createConsulta",
+      {
+        patient_id,
+        doctor_id,
+
+        date: {
+          dia: data.dia.toString(),
+          mes: data.mes?.toString(),
+          ano: data.ano.toString(),
+          horario: data.horario.toString(),
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } else {
+    return null;
+  }
 };
 
 export const GetDocs = async (token: string) => {
-  storageToken != undefined
-    ? (api.defaults.headers.common["Authorization"] = `Bearer ${storageToken}`)
-    : (api.defaults.headers.common["Authorization"] = `Bearer ${token}`);
-  const response = await api.get("/doctors");
+  if (await Auth()) {
+    const token = localStorage.getItem("@Auth:token");
 
-  return response;
+    const response = await api.get("/doctors", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } else {
+    return null;
+  }
 };

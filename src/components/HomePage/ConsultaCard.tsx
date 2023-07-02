@@ -27,7 +27,7 @@ export function ConsultaCard({
 
   useEffect(() => {
     const rawDateAux = new Date(date);
-    setDay(rawDateAux.getDay());
+    setDay(rawDateAux.getDate());
     setHours(rawDateAux.getHours());
     setMinutes(rawDateAux.getMinutes());
     setMonth(rawDateAux.getMonth());
@@ -56,7 +56,7 @@ export function ConsultaCard({
         <div className="w-1/3 text-sm">
           <div className="text-slate-400">Data</div>
           <div className="text-white text-lg">
-            {day} {getMonthName(month)} {year}
+            {day} {getMonthName(month + 1)} {year}
           </div>
         </div>
         <div className="w-1/3">

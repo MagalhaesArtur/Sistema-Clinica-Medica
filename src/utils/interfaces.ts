@@ -45,5 +45,5 @@ export interface DTOdate {
 export interface DTOConsulta {
   patient_id: string;
   doctor_id: string;
-  date: DTOdate;
+  data: DTOdate;
 }

@@ -20,11 +20,12 @@ export const ScheduleConsulta = () => {
 
   const aux = new Date();
 
-  console.log(currentDoc);
   useEffect(() => {
     const getDoc = async () => {
       const res = await GetDocs(token);
-      setDocs(res.data);
+      if (res != null) {
+        setDocs(res.data);
+      }
     };
     getDoc();
   }, []);
@@ -33,7 +34,7 @@ export const ScheduleConsulta = () => {
     CreateConsulta({
       patient_id: user.id,
       doctor_id: currentDoc?.id?.toString() || "",
-      date: {
+      data: {
         ano: aux.getFullYear().toString(),
         dia: currentAppointmentDay,
         horario: currentTime,
