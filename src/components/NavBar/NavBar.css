@@ -1,9 +1,0 @@
-/* .buttonHover:hover {
-  background-color: #c72525 !important;
-} */
-.toolbar {
-  display: flex !important;
-  flex-direction: row !important;
-  justify-content: center !important;
-  align-items: center !important;
-}

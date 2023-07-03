@@ -35,7 +35,7 @@ export const Consultas = ({ consultas, isLoading }: ConsultaProps) => {
       >
         <Dialog.Portal>
           <Dialog.Overlay className="bg-black/60 inset-0 fixed" />
-          <Dialog.Content className="fixed !overflow-y-scroll  bg-[#2f60d1] py-8 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px]  text-[#14163c] rounded-lg w-[700px] shadow-lg shadow-black/40">
+          <Dialog.Content className="fixed !overflow-y-scroll  bg-[#2f60d1] py-8 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  h-[600px]  text-[#14163c] rounded-lg w-[500px] telaMedia:w-[700px] shadow-lg shadow-black/40">
             <X
               className="absolute z-10  text-white hover:text-red-500 cursor-pointer right-4 top-4"
               onClick={() => {

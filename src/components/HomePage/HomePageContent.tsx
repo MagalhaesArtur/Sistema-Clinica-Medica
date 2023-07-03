@@ -31,16 +31,16 @@ export const HomePageContent = () => {
   }, []);
 
   return (
-    <section className="w-full flex ml-10  flex-col items-center justify-between  p-4">
+    <section className="w-full mb-20 telaMedia:mb-0 flex ml-10  flex-col items-center justify-between  p-4">
       <div className="w-full mt-10 text-2xl font-bold">
         <span className="text-slate-200">Bem vindo, </span>
         <span className="text-[#36bd42]">{user?.username}!</span>
       </div>
-      <div className="w-full flex telaMedia:flex-row flex-col justify-start gap-8 mt-20 h-full ">
-        <div className="sm:w-[100px] md:w-[200px] telaMedia:w-[280px] telaGrande:w-[300px] telaGG:w-[400px]">
+      <div className="w-full flex telaMedia:flex-row flex-col justify-center telaMedia:justify-center gap-8  mt-20 h-full ">
+        <div className="w-[80%] m-auto telaMedia:m-0  telaMedia:w-[280px] telaGrande:w-[300px] telaGG:w-[400px] telaXG:w-[500px]">
           <Consultas isLoading={isLoading} consultas={consultas} />
         </div>
-        <div className="sm:w-[500px] md:w-[600px] telaMedia:w-[700px] telaGrande:w-[860px] telaGG:w-[960px]">
+        <div className="w-[80%] m-auto telaMedia:m-0 telaMedia:w-[700px] telaGrande:w-[860px] telaGG:w-[960px]">
           <ScheduleConsulta getConsultas={getConsultas} />
         </div>
       </div>

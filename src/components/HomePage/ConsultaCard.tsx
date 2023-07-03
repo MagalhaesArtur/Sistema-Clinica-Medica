@@ -67,7 +67,7 @@ export function ConsultaCard({
         </div>
         <div className="w-1/3">
           <div className="text-slate-400">Status</div>
-          {isConfirmed ? (
+          {!isConfirmed ? (
             <div
               title="Aguardando confirmação"
               className="text-[#071008] w-8 flex rounded-md justify-center h-8 items-center bg-yellow-400 text-lg"

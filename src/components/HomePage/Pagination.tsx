@@ -19,6 +19,10 @@ function Pagination({
     new Date().getMonth()
   );
 
+  const [currentDayTime, setCurrentDayTime] = useState<number>(
+    new Date().getDate()
+  );
+
   const weeksPerPage = 1; // Número de dias por página
   const startIndex = currentPage * weeksPerPage;
   const endIndex = startIndex + weeksPerPage;
@@ -76,11 +80,11 @@ function Pagination({
             <ArrowForwardIcon />
           </button>
         </div>
-        <div className="flex justify-between ">
+        <div className="telaMedia:flex-row gap-4 telaMedia:gap-0 flex-wrap flex justify-start telaMedia:justify-between ">
           {week.map((day, dayIndex) => (
             <button
               key={dayIndex}
-              disabled={isLoading}
+              disabled={isLoading || day.dayOfMonth < currentDayTime}
               onClick={() => {
                 setIsLoading(true);
 
@@ -93,8 +97,10 @@ function Pagination({
                   setIsLoading(false);
                 }, 1000);
               }}
-              className={`flex  justify-center sm:w-10 md:w-14 lg:w-20 items-center p-3 rounded-3xl bg-[#0e2968] cursor-pointer ${
-                isLoading ? "!cursor-not-allowed" : null
+              className={`flex  justify-center w-20 items-center p-3 rounded-3xl bg-[#0e2968] cursor-pointer ${
+                isLoading || day.dayOfMonth < currentDayTime
+                  ? "!cursor-not-allowed"
+                  : null
               } border-2 border-transparent flex-col gap-4  transition-all ${
                 currentDay == dayIndex ? "!border-green-400" : null
               }`}

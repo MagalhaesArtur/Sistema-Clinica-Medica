@@ -3,7 +3,7 @@ import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { forwardRef, Fragment } from "react";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import MuiAlert, { AlertColor, AlertProps } from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -13,7 +13,12 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function SnackBar(props: { open: boolean; setOpen: Function }) {
+export default function SnackBar(props: {
+  open: boolean;
+  setOpen: Function;
+  message?: string;
+  color: AlertColor | undefined;
+}) {
   const handleClose = (
     event: React.SyntheticEvent | Event,
     reason?: string
@@ -51,8 +56,12 @@ export default function SnackBar(props: { open: boolean; setOpen: Function }) {
         onClose={handleClose}
         TransitionComponent={Slide}
       >
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Consulta enviada para confirmação!
+        <Alert
+          onClose={handleClose}
+          severity={props.color}
+          sx={{ width: "100%" }}
+        >
+          {props.message}
         </Alert>
       </Snackbar>
     </div>

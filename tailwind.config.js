@@ -10,6 +10,8 @@ export default {
       telaMedia: "1200px",
       telaGrande: "1400px",
       telaGG: "1600px",
+      telaXG: "1700px",
+
       // => @media (min-width: 1280px) { ... }
     },
   },

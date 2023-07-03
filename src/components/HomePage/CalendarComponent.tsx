@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Pagination from "./Pagination";
 import { CircularProgress } from "@mui/material";
 import { TimeComponent } from "./TimeComponent";
-import SnackBar from "../SnackBar";
 
 export interface DateProps {
   dayOfMonth: number;
@@ -39,8 +38,6 @@ interface CalendarComponentProps {
   currentTime: string;
   setCurrentTime: Function;
   handleCreateConsultaButton: Function;
-  openSnackbar: boolean;
-  setOpenSnackbar: Function;
 }
 
 export const CalendarComponent = ({
@@ -52,8 +49,6 @@ export const CalendarComponent = ({
   setCurrentAppointmentDay,
   handleCreateConsultaButton,
   setCurrentAppointmentMonth,
-  openSnackbar,
-  setOpenSnackbar,
 }: CalendarComponentProps) => {
   const [remainingMonths, setRemainingMonths] = useState<Array<number>>();
   const [remainingDays, setRemainingDays] = useState<Array<number>>();
@@ -199,8 +194,6 @@ export const CalendarComponent = ({
         <CircularProgress size={25} className="!invisible" />
       )}
 
-      <SnackBar open={openSnackbar} setOpen={setOpenSnackbar} />
-
       <Pagination
         setCurrentAppointmentDay={setCurrentAppointmentDay}
         setCurrentAppointmentMonth={setCurrentAppointmentMonth}
@@ -214,7 +207,7 @@ export const CalendarComponent = ({
         <span className="text-slate-300 font-bold text-2xl">
           Selecione um horário
         </span>
-        <div className="flex w-full py-4 justify-between gap-2">
+        <div className="telaMedia:flex-row telaGrande:flex-nowrap flex-wrap flex   w-full py-4 justify-start  telaMedia:justify-start gap-5 telaMedia:gap-5">
           {appointmentTimes.morning.map((time) => (
             <TimeComponent
               currentTime={currentTime}

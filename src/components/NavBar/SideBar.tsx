@@ -21,7 +21,7 @@ function Sidebar() {
   return (
     <aside
       id="sidebarTransition"
-      className={`bg-[#143789]  h-full  ${
+      className={`bg-[#143789] z-10  h-full  ${
         isSidebarOpen ? "w-72" : "w-32"
       } py-8 px-0 overflow-hidden flex flex-col text-white items-start justify-center `}
     >
@@ -30,7 +30,7 @@ function Sidebar() {
         onClick={() => {
           setIsSidebarOpen(!isSidebarOpen);
         }}
-        className="hover:cursor-pointer !mx-auto  "
+        className="hover:cursor-pointer flex  !mx-auto  "
         size="large"
         edge="start"
         sx={{ color: "#fff" }}
@@ -63,7 +63,7 @@ function Sidebar() {
                   }}
                   to={food.path}
                   id={food.name == currentFood ? "active" : "item"}
-                  className={`  px-4 pt-4 transition-all rounded-lg flex flex-col items-center gap-4 ${
+                  className={`  p-3 transition-all rounded-lg !flex flex-col !justify-center !items-center gap-4 ${
                     currentFood == food.name ? "bg-[#526ba3]" : null
                   }`}
                 >
@@ -72,17 +72,9 @@ function Sidebar() {
                       food.name == currentFood
                         ? "!text-white"
                         : "text-slate-400"
-                    }`}
+                    } !`}
                   >
                     {food.element}
-                  </span>
-                  <span
-                    id="foodName"
-                    className={`transition-all text-lg font-bold ${
-                      food.name == currentFood ? "text-white" : "text-slate-400"
-                    }`}
-                  >
-                    <div>{food.name}</div>
                   </span>
                 </NavLink>
               </div>
