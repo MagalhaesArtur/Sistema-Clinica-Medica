@@ -5,7 +5,11 @@ import { CreateConsulta, GetDocs } from "../../services/api";
 import { CalendarComponent } from "./CalendarComponent";
 import { AuthContext } from "../../context/AuthContext";
 
-export const ScheduleConsulta = () => {
+interface ScheduleConsultaProps {
+  getConsultas: Function;
+}
+
+export const ScheduleConsulta = ({ getConsultas }: ScheduleConsultaProps) => {
   const [docs, setDocs] = useState<Array<Doctor>>();
   const [currentDoc, setCurrentDoc] = useState<Doctor | null>(null);
 
@@ -15,8 +19,9 @@ export const ScheduleConsulta = () => {
     number | undefined
   >(undefined);
   const [currentTime, setCurrentTime] = useState("");
-
   const { token, user } = useContext(AuthContext);
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const aux = new Date();
 
@@ -30,8 +35,8 @@ export const ScheduleConsulta = () => {
     getDoc();
   }, []);
 
-  const handleCreateConsultaButton = () => {
-    CreateConsulta({
+  const handleCreateConsultaButton = async () => {
+    await CreateConsulta({
       patient_id: user.id,
       doctor_id: currentDoc?.id?.toString() || "",
       data: {
@@ -41,6 +46,8 @@ export const ScheduleConsulta = () => {
         mes: currentAppointmentMonth,
       },
     });
+    await getConsultas();
+    setOpenSnackbar(true);
   };
 
   return (
@@ -51,7 +58,7 @@ export const ScheduleConsulta = () => {
         Escolha o Médico e sua especialidade.
       </span>
 
-      <div className="w-[90%] gap-4 justify-between flex">
+      <div className="w-[100%] gap-4 justify-between flex">
         {docs?.map((doc) => (
           <span
             key={doc.id}
@@ -74,6 +81,8 @@ export const ScheduleConsulta = () => {
         ))}
       </div>
       <CalendarComponent
+        openSnackbar={openSnackbar}
+        setOpenSnackbar={setOpenSnackbar}
         handleCreateConsultaButton={handleCreateConsultaButton}
         currentAppointmentDay={currentAppointmentDay}
         currentAppointmentMonth={currentAppointmentMonth}

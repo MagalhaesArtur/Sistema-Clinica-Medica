@@ -76,7 +76,7 @@ function Pagination({
             <ArrowForwardIcon />
           </button>
         </div>
-        <div className="flex justify-between">
+        <div className="flex justify-between ">
           {week.map((day, dayIndex) => (
             <button
               key={dayIndex}
@@ -93,7 +93,7 @@ function Pagination({
                   setIsLoading(false);
                 }, 1000);
               }}
-              className={`flex w-24 justify-center items-center p-3 rounded-3xl bg-[#0e2968] cursor-pointer ${
+              className={`flex  justify-center sm:w-10 md:w-14 lg:w-20 items-center p-3 rounded-3xl bg-[#0e2968] cursor-pointer ${
                 isLoading ? "!cursor-not-allowed" : null
               } border-2 border-transparent flex-col gap-4  transition-all ${
                 currentDay == dayIndex ? "!border-green-400" : null

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Pagination from "./Pagination";
 import { CircularProgress } from "@mui/material";
 import { TimeComponent } from "./TimeComponent";
+import SnackBar from "../SnackBar";
 
 export interface DateProps {
   dayOfMonth: number;
@@ -38,6 +39,8 @@ interface CalendarComponentProps {
   currentTime: string;
   setCurrentTime: Function;
   handleCreateConsultaButton: Function;
+  openSnackbar: boolean;
+  setOpenSnackbar: Function;
 }
 
 export const CalendarComponent = ({
@@ -49,6 +52,8 @@ export const CalendarComponent = ({
   setCurrentAppointmentDay,
   handleCreateConsultaButton,
   setCurrentAppointmentMonth,
+  openSnackbar,
+  setOpenSnackbar,
 }: CalendarComponentProps) => {
   const [remainingMonths, setRemainingMonths] = useState<Array<number>>();
   const [remainingDays, setRemainingDays] = useState<Array<number>>();
@@ -63,7 +68,6 @@ export const CalendarComponent = ({
     const currentYear = currentDate.getFullYear();
     const endOfYear = new Date(currentYear, 11, 31); // Último dia do ano
     const weeks = [];
-
     let weekStartDate = new Date(currentDate);
     weekStartDate.setDate(currentDate.getDate() - currentDate.getDay()); // Início da semana atual
 
@@ -194,6 +198,8 @@ export const CalendarComponent = ({
       ) : (
         <CircularProgress size={25} className="!invisible" />
       )}
+
+      <SnackBar open={openSnackbar} setOpen={setOpenSnackbar} />
 
       <Pagination
         setCurrentAppointmentDay={setCurrentAppointmentDay}
