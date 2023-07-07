@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./main.css";
@@ -8,6 +8,7 @@ import UserHomePage from "./pages/UserHomePage.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import { RequireAuth } from "./context/RequireAuth.tsx";
 import { HomePageContent } from "./components/HomePage/HomePageContent.tsx";
+import ScreenRouter from "./utils/ScreenRouter.tsx";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <AuthProvider>
@@ -25,7 +26,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
               </RequireAuth>
             }
           >
-            <Route path="/home" element={<HomePageContent />}></Route>
+            <Route path="/home" element={<ScreenRouter />}></Route>
           </Route>
         </Routes>
       </Router>
