@@ -4,16 +4,17 @@ import "./styles.css";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
 import { NavLink } from "react-router-dom";
 
+import PersonIcon from "@mui/icons-material/Person";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import HomeIcon from "@mui/icons-material/Home";
 import HistoryIcon from "@mui/icons-material/History";
 
-function Sidebar() {
-  const [currentFood, setCurrentFood] = useState("Home");
+function AdminSideBar() {
+  const [currentFood, setCurrentFood] = useState("Usuários");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const foods = [
-    { name: "Home", element: <HomeIcon />, path: "/home" },
+    { name: "Usuários", element: <PersonIcon />, path: "/home" },
     { name: "Agendar", element: <EventNoteIcon />, path: "/consultas" },
     { name: "Histórico", element: <HistoryIcon />, path: "/history" },
   ];
@@ -54,14 +55,13 @@ function Sidebar() {
               key={food.name}
             >
               <div className="flex transition-all  relative gap-3 mt-4 h-full">
-                <NavLink
+                <button
                   onClick={() => {
                     // document.title = ` Food Commerce  ${
                     //   food.name != "Hambúrgueres" ? "| " + food.name : ""
                     // }
                     //     `;
                   }}
-                  to={food.path}
                   id={food.name == currentFood ? "active" : "item"}
                   className={`  p-3 transition-all rounded-lg !flex flex-col !justify-center !items-center gap-4 ${
                     currentFood == food.name ? "bg-[#526ba3]" : null
@@ -76,7 +76,7 @@ function Sidebar() {
                   >
                     {food.element}
                   </span>
-                </NavLink>
+                </button>
               </div>
             </li>
           ))}
@@ -86,4 +86,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default AdminSideBar;

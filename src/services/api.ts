@@ -6,8 +6,6 @@ import {
   UserProps,
 } from "../utils/interfaces";
 
-const storageToken = localStorage.getItem("@Auth:token");
-
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
@@ -116,6 +114,47 @@ export const GetDocs = async (token: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
+    return response;
+  } else {
+    return null;
+  }
+};
+
+export const GetUsers = async () => {
+  if (await Auth()) {
+    const token = localStorage.getItem("@Auth:token");
+
+    const response = await api.get("/users", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } else {
+    return null;
+  }
+};
+
+export const DeleteUser = async (id: string) => {
+  if (await Auth()) {
+    const token = localStorage.getItem("@Auth:token");
+    console.log(token);
+
+    const response = await api.delete("/delete/user/:id", {
+      params: {
+        id,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    // const response = await api.delete(`/delete/user`, {
+    //   data: id,
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // });
     return response;
   } else {
     return null;

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./main.css";
@@ -7,7 +7,6 @@ import SingUpPage from "./pages/SingUpPage.tsx";
 import UserHomePage from "./pages/UserHomePage.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import { RequireAuth } from "./context/RequireAuth.tsx";
-import { HomePageContent } from "./components/HomePage/HomePageContent.tsx";
 import ScreenRouter from "./utils/ScreenRouter.tsx";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

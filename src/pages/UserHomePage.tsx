@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/NavBar/SideBar";
 import { Outlet } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
+import UserSideBar from "../components/NavBar/UserSideBar";
+import AdminSideBar from "../components/NavBar/AdminSideBar";
 
 function UserHomePage() {
   const [isLoading, setIsLoading] = useState(false);
   const { isADM } = useContext(AuthContext);
+  const isADMAux = localStorage.getItem("@Auth:isADM");
 
   useEffect(() => {
     console.log(isADM);
@@ -14,13 +16,18 @@ function UserHomePage() {
 
   return (
     <div className="max-w-[100vw]  min-h-screen flex bg-[#130f40]">
-      {isADM ? (
-        <></>
+      {isADM || isADMAux ? (
+        <>
+          <section className="min-h-screen">
+            <AdminSideBar />
+          </section>
+        </>
       ) : (
         <section className="min-h-screen">
-          <Sidebar />
+          <UserSideBar />
         </section>
       )}
+
       <Outlet />
     </div>
   );

@@ -54,7 +54,6 @@ export const AuthProvider = ({ children }: AuthProps) => {
       }
 
       setUser(res.user);
-      console.log(res);
       setToken(res.token);
       let decoded = jwt_decode<any>(res.token);
       if (decoded.isAtt) {
@@ -62,6 +61,8 @@ export const AuthProvider = ({ children }: AuthProps) => {
       }
       if (decoded.isADM) {
         setIsADM(true);
+        localStorage.setItem("@Auth:isADM", JSON.stringify(true));
+
         setIsATT(true);
       }
       localStorage.setItem("@Auth:token", res.token);

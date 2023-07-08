@@ -1,0 +1,12 @@
+#userBox {
+  box-shadow: 0 8px 32px 0 rgba(17, 64, 145, 0.37);
+}
+#standard-basic-label {
+  color: rgb(110, 115, 113) !important;
+}
+input {
+  color: white !important;
+}
+.css-v4u5dn-MuiInputBase-root-MuiInput-root:before {
+  border-bottom: 1px solid rgb(20, 29, 203) !important;
+}
