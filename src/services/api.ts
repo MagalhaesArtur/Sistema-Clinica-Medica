@@ -1,20 +1,11 @@
-import axios, { AxiosHeaderValue, AxiosHeaders, AxiosInstance } from "axios";
-import {
-  DTOConsulta,
-  DTOdate,
-  UserAuthProps,
-  UserProps,
-} from "../utils/interfaces";
+import axios from "axios";
+import { DTOConsulta, UserAuthProps, UserProps } from "../utils/interfaces";
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-export const LoginApi = async (
-  email: String,
-  password: String,
-  rememberMe?: boolean
-) => {
+export const LoginApi = async (email: String, password: String) => {
   try {
     const response = await api.post("/login", {
       email,
@@ -105,7 +96,7 @@ export const CreateConsulta = async ({
   }
 };
 
-export const GetDocs = async (token: string) => {
+export const GetDocs = async () => {
   if (await Auth()) {
     const token = localStorage.getItem("@Auth:token");
 
@@ -140,8 +131,8 @@ export const DeleteUser = async (id: string) => {
     const token = localStorage.getItem("@Auth:token");
     console.log(token);
 
-    const response = await api.delete("/delete/user/:id", {
-      params: {
+    const response = await api.delete("/delete/user", {
+      data: {
         id,
       },
       headers: {
@@ -149,12 +140,21 @@ export const DeleteUser = async (id: string) => {
       },
     });
 
-    // const response = await api.delete(`/delete/user`, {
-    //   data: id,
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // });
+    return response;
+  } else {
+    return null;
+  }
+};
+
+export const GetAllConsultas = async () => {
+  if (await Auth()) {
+    const token = localStorage.getItem("@Auth:token");
+
+    const response = await api.get("/consultas", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response;
   } else {
     return null;

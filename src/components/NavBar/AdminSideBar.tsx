@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 
 import PersonIcon from "@mui/icons-material/Person";
 import EventNoteIcon from "@mui/icons-material/EventNote";
-import HomeIcon from "@mui/icons-material/Home";
 import HistoryIcon from "@mui/icons-material/History";
 
 function AdminSideBar() {
@@ -14,10 +13,16 @@ function AdminSideBar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const foods = [
-    { name: "Usuários", element: <PersonIcon />, path: "/home" },
-    { name: "Agendar", element: <EventNoteIcon />, path: "/consultas" },
+    { name: "Usuários", element: <PersonIcon />, path: "/ADMPainel/users" },
+    {
+      name: "Consultas",
+      element: <EventNoteIcon />,
+      path: "/ADMPainel/consultas",
+    },
     { name: "Histórico", element: <HistoryIcon />, path: "/history" },
   ];
+
+  console.log(currentFood);
 
   return (
     <aside
@@ -54,14 +59,18 @@ function AdminSideBar() {
               }}
               key={food.name}
             >
-              <div className="flex transition-all  relative gap-3 mt-4 h-full">
-                <button
+              <div
+                title={food.name}
+                className="flex transition-all  relative gap-3 mt-4 h-full"
+              >
+                <NavLink
                   onClick={() => {
                     // document.title = ` Food Commerce  ${
                     //   food.name != "Hambúrgueres" ? "| " + food.name : ""
                     // }
                     //     `;
                   }}
+                  to={food.path}
                   id={food.name == currentFood ? "active" : "item"}
                   className={`  p-3 transition-all rounded-lg !flex flex-col !justify-center !items-center gap-4 ${
                     currentFood == food.name ? "bg-[#526ba3]" : null
@@ -76,7 +85,7 @@ function AdminSideBar() {
                   >
                     {food.element}
                   </span>
-                </button>
+                </NavLink>
               </div>
             </li>
           ))}

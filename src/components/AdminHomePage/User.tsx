@@ -4,12 +4,34 @@ import { UserAuthProps } from "../../utils/interfaces";
 import { useState } from "react";
 import { DeleteUser } from "../../services/api";
 
-export function User({ email, username, id }: Partial<UserAuthProps>) {
+interface UserProps {
+  user: UserAuthProps;
+  setIsLoading: Function;
+  currentUsers: UserAuthProps[];
+  setCurrentUsers: Function;
+}
+
+export function User({
+  setIsLoading,
+  user,
+  currentUsers,
+  setCurrentUsers,
+}: UserProps) {
   const [isDialogClientDataOpen, setIsDialogClientDataOpen] = useState(false);
 
   const deleteUser = async (id: string) => {
+    setIsLoading(true);
     const res = await DeleteUser(id);
-    console.log(res?.data);
+    let index = currentUsers.indexOf(user);
+    let copiaArray = [...currentUsers];
+
+    if (index !== -1) {
+      copiaArray.splice(index, 1);
+    }
+    setCurrentUsers(copiaArray);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
   };
 
   return (
@@ -34,21 +56,22 @@ export function User({ email, username, id }: Partial<UserAuthProps>) {
                 <div className="text-white  font-bold  text-lg">
                   <div>
                     <span className="text-slate-400  text-sm">Email:</span>{" "}
-                    {email}
+                    {user.email}
                   </div>
                   <div>
                     <span className="text-slate-400  text-sm">Username: </span>{" "}
-                    {username}
+                    {user.username}
                   </div>
                   <div className="w-full">
-                    <span className="text-slate-400  text-sm">ID: </span> {id}
+                    <span className="text-slate-400  text-sm">ID: </span>{" "}
+                    {user.id}
                   </div>
                 </div>
               </div>
               <div className="w-full flex justify-around">
                 <button
                   onClick={() => {
-                    deleteUser(id?.toString() || "");
+                    deleteUser(user.id?.toString() || "");
                   }}
                   className="p-4 bg-green-600 rounded-lg transition-all hover:bg-green-400"
                 >
@@ -72,14 +95,14 @@ export function User({ email, username, id }: Partial<UserAuthProps>) {
       <div className="p-4 bg-[#2f60d1] w-full flex justify-between items-center rounded-lg    ">
         <div className="text-white  font-bold  text-lg">
           <div>
-            <span className="text-slate-400  text-sm">Email:</span> {email}
+            <span className="text-slate-400  text-sm">Email:</span> {user.email}
           </div>
           <div>
             <span className="text-slate-400  text-sm">Username: </span>{" "}
-            {username}
+            {user.username}
           </div>
           <div className="w-full">
-            <span className="text-slate-400  text-sm">ID: </span> {id}
+            <span className="text-slate-400  text-sm">ID: </span> {user.id}
           </div>
         </div>
         <span title="Apagar usuário">
