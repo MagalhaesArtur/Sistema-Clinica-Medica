@@ -21,8 +21,13 @@ export const AuthProvider = ({ children }: AuthProps) => {
   let [user, setUser] = useState<UserAuthProps | null>(null);
   const [isAtt, setIsATT] = useState(false);
   const [isADM, setIsADM] = useState(false);
-
   let [token, setToken] = useState("");
+
+  function updateUrl(newUrl: any) {
+    window.location.href = newUrl;
+  }
+
+  console.log(window.location.host);
 
   useEffect(() => {
     const loadingStoreData = async () => {
@@ -35,6 +40,10 @@ export const AuthProvider = ({ children }: AuthProps) => {
           alert("Sessão Expirada! Faça o login novamente.");
           localStorage.clear();
           setUser(null);
+          user = null;
+          updateUrl(
+            window.location.protocol + "//" + window.location.host + "/login"
+          );
         } else {
           setUser(JSON.parse(storageUser));
         }

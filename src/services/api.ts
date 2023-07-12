@@ -129,7 +129,6 @@ export const GetUsers = async () => {
 export const DeleteUser = async (id: string) => {
   if (await Auth()) {
     const token = localStorage.getItem("@Auth:token");
-    console.log(token);
 
     const response = await api.delete("/delete/user", {
       data: {
@@ -155,6 +154,37 @@ export const GetAllConsultas = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
+    return response;
+  } else {
+    return null;
+  }
+};
+
+export const DeleteConsulta = async (id: string) => {
+  if (await Auth()) {
+    const token = localStorage.getItem("@Auth:token");
+
+    const response = await api.delete("/deleteConsulta/" + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  } else {
+    return null;
+  }
+};
+
+export const ConfirmConsulta = async (id: string) => {
+  if (await Auth()) {
+    const token = localStorage.getItem("@Auth:token");
+    const response = await api.get("/confirmConsulta/" + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     return response;
   } else {
     return null;

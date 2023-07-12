@@ -3,8 +3,8 @@ import SingUpForm from "./Form";
 
 function SingUpScreen() {
   return (
-    <nav className="w-[80rem] h-[80vh]  flex justify-center items-center rounded-xl pl-10 bg-[#fff]">
-      <div className="w-1/2 flex flex-col h-full justify-center items-center">
+    <div className="telaMedia:w-[75rem] w-[90%] md:w-[47rem] h-[80vh] md:flex-row  flex-col flex justify-center items-center rounded-xl md:pl-10 md:bg-white bg-[#1217c3]">
+      <div className="w-1/2  flex-col hidden md:flex h-full justify-center items-center">
         <div className="text-3xl font-semibold  w-[50%]">
           Seja bem-vindo à nossa clínica médica.
         </div>
@@ -12,11 +12,11 @@ function SingUpScreen() {
       </div>
       <div
         id="form"
-        className="w-1/2 h-full flex rounded-tr-xl rounded-br-xl flex-col justify-center"
+        className="md:w-1/2 w-full h-full flex md:rounded-tr-xl rounded-lg  md:rounded-br-xl flex-col justify-center"
       >
         <SingUpForm isLoginPage={false} />
       </div>
-    </nav>
+    </div>
   );
 }
 

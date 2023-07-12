@@ -3,20 +3,13 @@ import { useState } from "react";
 import "./styles.css";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
 import { NavLink } from "react-router-dom";
-
-import EventNoteIcon from "@mui/icons-material/EventNote";
 import HomeIcon from "@mui/icons-material/Home";
-import HistoryIcon from "@mui/icons-material/History";
 
 function UserSideBar() {
   const [currentFood, setCurrentFood] = useState("Home");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const foods = [
-    { name: "Home", element: <HomeIcon />, path: "/home" },
-    { name: "Agendar", element: <EventNoteIcon />, path: "/consultas" },
-    { name: "Histórico", element: <HistoryIcon />, path: "/history" },
-  ];
+  const pages = [{ name: "Home", element: <HomeIcon />, path: "/home" }];
 
   return (
     <aside
@@ -46,7 +39,7 @@ function UserSideBar() {
           id="navItens"
           className="flex transition-all gap-3 mt-4 justify-center items-center flex-col h-full"
         >
-          {foods.map((food) => (
+          {pages.map((food) => (
             <li
               onClick={() => {
                 setCurrentFood(food.name);
@@ -55,12 +48,6 @@ function UserSideBar() {
             >
               <div className="flex transition-all  relative gap-3 mt-4 h-full">
                 <NavLink
-                  onClick={() => {
-                    // document.title = ` Food Commerce  ${
-                    //   food.name != "Hambúrgueres" ? "| " + food.name : ""
-                    // }
-                    //     `;
-                  }}
                   to={food.path}
                   id={food.name == currentFood ? "active" : "item"}
                   className={`  p-3 transition-all rounded-lg !flex flex-col !justify-center !items-center gap-4 ${

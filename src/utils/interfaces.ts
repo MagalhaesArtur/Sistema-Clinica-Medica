@@ -23,7 +23,7 @@ export interface UserAuthProps {
   credentialsNonExpired: boolean;
   email: String;
   enabled: boolean;
-  id: String;
+  id: string;
   password: null;
   username: String;
 }

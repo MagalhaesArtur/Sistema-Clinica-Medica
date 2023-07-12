@@ -22,8 +22,6 @@ function AdminSideBar() {
     { name: "Histórico", element: <HistoryIcon />, path: "/history" },
   ];
 
-  console.log(currentFood);
-
   return (
     <aside
       id="sidebarTransition"

@@ -87,7 +87,13 @@ export function Users() {
       </div>
       <div
         id="userBox"
-        className="w-[60%] rounded-lg mt-20  flex flex-col justify-center items-center gap-6 p-5 bg-[#143789]  "
+        className={`w-[60%] ${
+          currentUsers
+            ? currentUsers.length >= 5
+              ? "overflow-y-scroll"
+              : "overflow-y-hidden"
+            : null
+        } rounded-lg mt-20 max-h-[500px] flex flex-col  items-center gap-6 p-5 bg-[#143789]`}
       >
         {isLoading ? (
           <CircularProgress size={30} className="text-white" color="inherit" />
@@ -95,6 +101,7 @@ export function Users() {
           currentUsers?.length > 0 ? (
             currentUsers?.map((user) => (
               <User
+                key={user.id}
                 currentUsers={currentUsers}
                 setCurrentUsers={setCurrentUsers}
                 user={user}

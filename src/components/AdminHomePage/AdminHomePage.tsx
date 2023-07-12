@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -6,7 +5,6 @@ import AdminSideBar from "../NavBar/AdminSideBar";
 import UserSideBar from "../NavBar/UserSideBar";
 
 function AdminHomePage() {
-  const [isLoading, setIsLoading] = useState(false);
   const { isADM } = useContext(AuthContext);
   const isADMAux = localStorage.getItem("@Auth:isADM");
 
