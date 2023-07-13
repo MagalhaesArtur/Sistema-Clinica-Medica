@@ -39,7 +39,7 @@ export function Consulta(props: {
 
   const deleteConsulta = async (id: string) => {
     props.setIsLoading(true);
-    const res = await DeleteConsulta(id);
+    await DeleteConsulta(id);
     let index = props.currentConsultas.indexOf(props.consulta);
     let copiaArray = [...props.currentConsultas];
 

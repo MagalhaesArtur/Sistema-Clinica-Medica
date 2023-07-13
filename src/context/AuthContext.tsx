@@ -27,8 +27,6 @@ export const AuthProvider = ({ children }: AuthProps) => {
     window.location.href = newUrl;
   }
 
-  console.log(window.location.host);
-
   useEffect(() => {
     const loadingStoreData = async () => {
       const storageUser = localStorage.getItem("@Auth:user");

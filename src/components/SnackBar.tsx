@@ -23,6 +23,7 @@ export default function SnackBar(props: {
     event: React.SyntheticEvent | Event,
     reason?: string
   ) => {
+    event;
     if (reason === "clickaway") {
       return;
     }

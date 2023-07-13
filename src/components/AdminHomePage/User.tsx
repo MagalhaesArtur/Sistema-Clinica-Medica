@@ -21,7 +21,7 @@ export function User({
 
   const deleteUser = async (id: string) => {
     setIsLoading(true);
-    const res = await DeleteUser(id);
+    await DeleteUser(id);
     let index = currentUsers.indexOf(user);
     let copiaArray = [...currentUsers];
 
