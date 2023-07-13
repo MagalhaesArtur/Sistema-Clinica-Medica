@@ -33,7 +33,7 @@ export const HomePageContent = () => {
   return (
     <section className="w-full mb-20 telaMedia:mb-0 flex ml-10  flex-col items-center justify-between  p-4">
       <div className="w-full mt-10 text-2xl font-bold">
-        <span className="text-slate-200">Bem vindo, </span>
+        <span className="text-slate-200">Bem vindo(a), </span>
         <span className="text-[#36bd42]">{user?.username}!</span>
       </div>
       <div className="w-full flex telaMedia:flex-row flex-col justify-center telaMedia:justify-center gap-8  mt-20 h-full ">

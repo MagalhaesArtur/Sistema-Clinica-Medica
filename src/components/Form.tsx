@@ -42,6 +42,22 @@ function LoginForm(props: { isLoginPage: boolean }) {
         setTimeout(() => {
           setIsEmailAlreadyInUse(false);
         }, 5000);
+      } else {
+        const res = await signIn({ email, password });
+        if (res == 404 || res == 403) {
+          setLoading(false);
+
+          setIsLoginError(true);
+          setMessageError("Email ou senha inválidos!");
+          setTimeout(() => {
+            setIsLoginError(false);
+          }, 5000);
+        } else {
+          setTimeout(() => {
+            setLoading(false);
+            navigate("/home");
+          }, 1000);
+        }
       }
       setLoading(false);
     }
