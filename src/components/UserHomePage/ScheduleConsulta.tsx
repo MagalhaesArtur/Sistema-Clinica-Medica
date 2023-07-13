@@ -18,6 +18,8 @@ export const ScheduleConsulta = ({ getConsultas }: ScheduleConsultaProps) => {
   const [loadingDocs, setLoadingDocs] = useState(false);
 
   const [currentYear, setCurrentYear] = useState();
+  setCurrentYear;
+  loadingDocs;
   const [currentAppointmentDay, setCurrentAppointmentDay] = useState("");
   const [currentAppointmentMonth, setCurrentAppointmentMonth] = useState<
     number | undefined
