@@ -23,7 +23,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.StrictMode>
       <Router>
         <Routes>
-          <Route path="/login" element={<Navigate to={"/login"} />} />
+          <Route path="/" element={<Navigate to={"/login"} />} />
 
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<SingUpPage />} />
