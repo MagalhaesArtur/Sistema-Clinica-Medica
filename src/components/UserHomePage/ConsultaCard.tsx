@@ -22,7 +22,6 @@ export function ConsultaCard({ date, doctor, isConfirmed }: ConsultasProps) {
 
   useEffect(() => {
     const rawDateAux = new Date(date);
-    rawDateAux.setUTCHours(rawDateAux.getUTCHours() - 3);
     setDay(rawDateAux.getDate());
     setHours(rawDateAux.getUTCHours());
     setMinutes(rawDateAux.getMinutes());
