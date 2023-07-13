@@ -22,6 +22,7 @@ function Pagination({
   const [currentDayTime, setCurrentDayTime] = useState<number>(
     new Date().getDate()
   );
+  setCurrentDayTime;
 
   const weeksPerPage = 1; // Número de dias por página
   const startIndex = currentPage * weeksPerPage;

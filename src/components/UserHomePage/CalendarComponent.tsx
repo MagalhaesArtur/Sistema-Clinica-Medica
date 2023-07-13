@@ -55,6 +55,9 @@ export const CalendarComponent = ({
   const [currentWeek, setCurrentWeek] = useState<
     CurrentWeekProps | undefined
   >();
+  remainingMonths;
+  remainingDays;
+  currentWeek;
   const [remainingWeeks, setRemainingWeeks] = useState<RemainingWeeksProps>();
   const [isLoading, setIsLoading] = useState(false);
 

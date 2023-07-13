@@ -23,7 +23,7 @@ export const ScheduleConsulta = ({ getConsultas }: ScheduleConsultaProps) => {
     number | undefined
   >(undefined);
   const [currentTime, setCurrentTime] = useState("");
-  const { token, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -37,7 +37,7 @@ export const ScheduleConsulta = ({ getConsultas }: ScheduleConsultaProps) => {
     const getDoc = async () => {
       setLoadingDocs(true);
 
-      const res = await GetDocs(token);
+      const res = await GetDocs();
       if (res != null) {
         setDocs(res.data);
         setLoadingDocs(false);

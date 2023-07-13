@@ -4,12 +4,7 @@ import "./styles.css";
 import HourglassEmptyRoundedIcon from "@mui/icons-material/HourglassEmptyRounded";
 import CheckIcon from "@mui/icons-material/Check";
 
-export function ConsultaCard({
-  date,
-  doctor,
-  patient,
-  isConfirmed,
-}: ConsultasProps) {
+export function ConsultaCard({ date, doctor, isConfirmed }: ConsultasProps) {
   const [day, setDay] = useState<any>();
   const [hours, setHours] = useState<any>();
   const [minutes, setMinutes] = useState<any>();

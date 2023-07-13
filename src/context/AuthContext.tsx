@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }: AuthProps) => {
   const [isAtt, setIsATT] = useState(false);
   const [isADM, setIsADM] = useState(false);
   let [token, setToken] = useState("");
-
+  token;
   function updateUrl(newUrl: any) {
     window.location.href = newUrl;
   }
