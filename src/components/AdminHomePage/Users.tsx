@@ -89,7 +89,7 @@ export function Users() {
         id="userBox"
         className={`w-[60%] ${
           currentUsers
-            ? currentUsers.length >= 5
+            ? currentUsers.length >= 4
               ? "overflow-y-scroll"
               : "overflow-y-hidden"
             : null
